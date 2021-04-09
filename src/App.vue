@@ -1,32 +1,79 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
+  <div>
+    <Navbar />
+
+    <v-card class="mx-auto overflow-hidden" height="400" width="344">
+      <v-system-bar color="deep-purple darken-3"></v-system-bar>
+
+      <v-app-bar color="deep-purple accent-4" dark prominent>
+        <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+
+        <v-toolbar-title>My files</v-toolbar-title>
+
+        <v-spacer></v-spacer>
+
+        <v-btn icon>
+          <v-icon>mdi-magnify</v-icon>
+        </v-btn>
+
+        <v-btn icon>
+          <v-icon>mdi-filter</v-icon>
+        </v-btn>
+
+        <v-btn icon>
+          <v-icon>mdi-dots-vertical</v-icon>
+        </v-btn>
+      </v-app-bar>
+
+      <v-navigation-drawer v-model="drawer" absolute bottom temporary>
+        <v-list nav dense>
+          <v-list-item-group
+            v-model="group"
+            active-class="deep-purple--text text--accent-4"
+          >
+            <v-list-item>
+              <v-list-item-title>Foo</v-list-item-title>
+            </v-list-item>
+
+            <v-list-item>
+              <v-list-item-title>Bar</v-list-item-title>
+            </v-list-item>
+
+            <v-list-item>
+              <v-list-item-title>Fizz</v-list-item-title>
+            </v-list-item>
+
+            <v-list-item>
+              <v-list-item-title>Buzz</v-list-item-title>
+            </v-list-item>
+          </v-list-item-group>
+        </v-list>
+      </v-navigation-drawer>
+
+      <v-card-text>
+        The navigation drawer will appear from the bottom on smaller size
+        screens.
+      </v-card-text>
+    </v-card>
+    <Main />
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import Main from '@/views/Main';
+import Navbar from '@/components/Navbar';
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+export default {
+  name: 'App',
+  components: { Main, Navbar },
+  data: () => ({
+    drawer: false,
+    group: null
+  }),
+  watch: {
+    group() {
+      this.drawer = false;
     }
   }
-}
-</style>
+};
+</script>
