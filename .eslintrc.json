@@ -1,0 +1,93 @@
+{
+  "root": true,
+  "env": {
+    "node": true,
+    "es6": true,
+    "commonjs": true
+  },
+  "extends": ["plugin:vue/recommended", "eslint:recommended", "@vue/prettier"],
+  "parserOptions": {
+    "parser": "babel-eslint"
+  },
+  "rules": {
+    "semi": "error",
+    "no-multi-spaces": ["error", { "exceptions": { "Property": true } }],
+    "keyword-spacing": "error",
+    "quotes": ["error", "single"],
+    "indent": ["error", 2, { "SwitchCase": 1 }],
+    "object-curly-spacing": ["error", "always"],
+    "array-bracket-spacing": ["error", "never"],
+    "arrow-spacing": "error",
+    "space-before-blocks": "error",
+    "computed-property-spacing": [
+      "error",
+      "never",
+      { "enforceForClassMembers": true }
+    ],
+    "comma-dangle": ["error", "never"],
+    "switch-colon-spacing": "error",
+    "arrow-parens": ["error", "always"],
+    "vue/attributes-order": "error",
+    "vue/no-v-html": "error",
+    "vue/this-in-template": "error",
+    "vue/require-default-prop": "error",
+    "vue/prop-name-casing": ["error", "camelCase"],
+    "vue/no-template-shadow": "error",
+    "vue/no-spaces-around-equal-signs-in-attribute": "error",
+    "vue/no-multi-spaces": "error",
+    "vue/mustache-interpolation-spacing": "error",
+    "vue/multiline-html-element-content-newline": "error",
+    "vue/max-attributes-per-line": [
+      2,
+      {
+        "singleline": 20,
+        "multiline": {
+          "max": 1,
+          "allowFirstLine": false
+        }
+      }
+    ],
+    "vue/html-quotes": ["error", "double"],
+    "vue/html-indent": [
+      "error",
+      2,
+      {
+        "attribute": 1,
+        "baseIndent": 1,
+        "closeBracket": 0,
+        "alignAttributesVertically": true,
+        "ignores": []
+      }
+    ],
+    "vue/html-end-tags": "error",
+    "vue/html-closing-bracket-spacing": "error",
+    "vue/html-closing-bracket-newline": "error",
+    "vue/component-definition-name-casing": ["error", "PascalCase"],
+    "vue/attribute-hyphenation": "error",
+    "vue/no-dupe-keys": "error",
+    "vue/no-duplicate-attributes": "error",
+    "vue/no-reserved-keys": "error",
+    "vue/no-shared-component-data": "error",
+    "vue/no-unused-components": "error",
+    "vue/no-unused-vars": "error",
+    "vue/require-prop-type-constructor": "error",
+    "vue/require-render-return": "error",
+    "vue/return-in-computed-property": "error",
+    "vue/valid-v-bind": "error",
+    "vue/valid-v-cloak": "error",
+    "vue/valid-v-else-if": "error",
+    "vue/valid-v-else": "error",
+    "vue/valid-v-for": "error",
+    "vue/valid-v-html": "error",
+    "vue/valid-v-if": "error",
+    "vue/valid-v-model": "error",
+    "vue/valid-v-on": "error",
+    "vue/valid-v-once": "error",
+    "vue/valid-v-pre": "error",
+    "vue/valid-v-show": "error",
+    "vue/valid-v-slot": "error",
+    "vue/valid-v-text": "error",
+    "vue/valid-template-root": "error",
+    "vue/require-valid-default-prop": "error"
+  }
+}
