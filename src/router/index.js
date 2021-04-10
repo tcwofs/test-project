@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Main from '@/views/Main';
-import store from '@/store';
 
 Vue.use(VueRouter);
 
@@ -9,12 +8,18 @@ const routes = [
   {
     path: '/',
     component: Main,
-    meta: {
-      requiresAuth: true
-    },
-    children: [{ path: '/error', component: () => import('../views/Error') }]
+    children: [
+      {
+        path: '/error',
+        component: () => import('../views/Error'),
+        meta: {
+          requiresAuth: true
+        }
+      }
+    ]
   },
   { path: '/auth', component: () => import('../views/Auth') },
+  { path: '/logout', component: () => import('../views/Empty') },
   { path: '/error', component: () => import('../views/Error') },
   {
     // others
@@ -31,12 +36,15 @@ const router = new VueRouter({
 
 router.beforeEach((to, _, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (store.getters['authorization/isLoggedIn']) {
+    if (localStorage.getItem('user')) {
       return next();
     }
     next('/');
   } else {
-    next();
+    if (localStorage.getItem('user') && to.path === '/auth') {
+      return next('/');
+    }
+    return next();
   }
 });
 

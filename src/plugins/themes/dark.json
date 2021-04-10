@@ -1,9 +1,9 @@
 {
-    "primary": "#fbe9c1",
-    "secondary": "#39363a",
-    "accent": "#9c7fa6",
-    "error": "#dc6b56",
-    "info": "#4eb1aa",
-    "success": "#6b8d5f",
-    "warning": "#e1a854"
+  "primary": "#fcffc0",
+  "secondary": "#2f142f",
+  "accent": "#2a584f",
+  "error": "#c6505a",
+  "info": "#6eb8a8",
+  "success": "#74a33f",
+  "warning": "#ee9c5d"
 }
