@@ -1,30 +1,51 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import Main from '@/views/Main';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/",
-    name: "Home",
-    component: Home,
+    path: '/',
+    component: Main,
+    children: [
+      {
+        path: '/error',
+        component: () => import('../views/Error'),
+        meta: {
+          requiresAuth: true
+        }
+      }
+    ]
   },
+  { path: '/auth', component: () => import('../views/Auth') },
+  { path: '/logout', component: () => import('../views/Empty') },
+  { path: '/error', component: () => import('../views/Error') },
   {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
-  },
+    // others
+    path: '*',
+    redirect: '/error'
+  }
 ];
 
 const router = new VueRouter({
-  mode: "history",
+  mode: 'history',
   base: process.env.BASE_URL,
-  routes,
+  routes
+});
+
+router.beforeEach((to, _, next) => {
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (localStorage.getItem('user')) {
+      return next();
+    }
+    next('/');
+  } else {
+    if (localStorage.getItem('user') && to.path === '/auth') {
+      return next('/');
+    }
+    return next();
+  }
 });
 
 export default router;
