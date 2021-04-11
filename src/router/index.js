@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Main from '@/views/Main';
+import Home from '@/components/Main/Home';
 
 Vue.use(VueRouter);
 
@@ -11,11 +12,17 @@ const routes = [
     component: Main,
     children: [
       {
-        // path: '/error',
-        // component: () => import('../views/Error'),
-        // meta: {
-        //   requiresAuth: true
-        // }
+        path: '/',
+        name: 'home',
+        component: Home
+      },
+      {
+        path: '/dashboard',
+        name: 'dashboard',
+        component: () => import('../components/Main/Dashboard'),
+        meta: {
+          requiresAuth: true
+        }
       }
     ]
   },

@@ -1,15 +1,10 @@
 <template>
-  <div>main</div>
+  <router-view />
 </template>
 
 <script>
 export default {
-  name: 'Main',
-  data() {
-    return {};
-  },
-  mounted() {},
-  methods: {}
+  name: 'Main'
 };
 </script>
 
