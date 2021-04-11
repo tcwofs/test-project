@@ -7,25 +7,30 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: '/',
+    name: 'main',
     component: Main,
     children: [
       {
-        path: '/error',
-        component: () => import('../views/Error'),
-        meta: {
-          requiresAuth: true
-        }
+        // path: '/error',
+        // component: () => import('../views/Error'),
+        // meta: {
+        //   requiresAuth: true
+        // }
       }
     ]
   },
-  { path: '/auth', component: () => import('../views/Auth') },
-  { path: '/logout', component: () => import('../views/Empty') },
-  { path: '/error', component: () => import('../views/Error') },
   {
-    // others
-    path: '*',
-    redirect: '/error'
-  }
+    path: '/auth',
+    name: 'auth',
+    component: () => import('../views/Auth'),
+    props: true
+  },
+  {
+    path: '/not-found',
+    name: 'not-fond',
+    component: () => import('../views/NotFound')
+  },
+  { path: '*', redirect: '/not-found' }
 ];
 
 const router = new VueRouter({

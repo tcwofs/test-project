@@ -1,12 +1,12 @@
 <template>
-  <v-card max-width="500px" :min-width="getWidth" class="align-self-center">
+  <v-card max-width="500px" :min-width="getWidth" outlined>
     <v-tabs v-model="tab" background-color="transparent" fixed-tabs hide-slider>
       <v-tab v-for="item in items" :key="item" :ripple="false">
         {{ item }}
       </v-tab>
     </v-tabs>
 
-    <v-tabs-items v-model="tab">
+    <v-tabs-items v-model="tab" class="no-background">
       <v-tab-item>
         <Login />
       </v-tab-item>
@@ -18,11 +18,18 @@
 </template>
 
 <script>
-import Login from '../components/Auth/Login.vue';
-import Register from '../components/Auth/Register.vue';
+import Login from '../components/Auth/Login';
+import Register from '../components/Auth/Register';
+
 export default {
   name: 'Auth',
   components: { Register, Login },
+  props: {
+    type: {
+      type: String,
+      default: 'login'
+    }
+  },
   data: () => ({
     tab: null,
     items: ['Login', 'Register']
@@ -45,6 +52,9 @@ export default {
           '100%';
       }
     }
+  },
+  created() {
+    this.type === 'login' ? (this.tab = 0) : (this.tab = 1);
   }
 };
 </script>
