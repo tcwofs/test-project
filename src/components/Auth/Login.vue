@@ -46,7 +46,7 @@
             'pointer-events': loading ? 'none' : 'auto'
           }"
         >
-          Войти
+          Login
         </v-btn>
       </v-row>
     </form>
@@ -93,7 +93,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      tryToLogin: 'global/login'
+      enter: 'global/enter'
     }),
     async submit() {
       this.$v.$touch();
@@ -102,7 +102,7 @@ export default {
       this.timeout && clearTimeout(this.timeout);
 
       try {
-        const response = await this.tryToLogin(this.user);
+        const response = await this.enter(this.user);
 
         if (response) {
           this.loading = false;

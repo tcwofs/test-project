@@ -11,15 +11,15 @@ export default {
     updateProperty: (state, data) => (state[data.property] = data.value)
   },
   actions: {
-    login(_, user) {
+    enter(_, user) {
       return new Promise((resolve) => {
         localStorage.setItem(
           'user',
           JSON.stringify({
             ...user,
             token: 'asd',
-            firstName: 'Test',
-            lastName: 'User'
+            firstName: user.firstName ?? 'Test',
+            lastName: user.lastName ?? 'User'
           })
         );
         setTimeout(() => {

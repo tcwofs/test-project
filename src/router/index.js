@@ -7,14 +7,15 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: '/',
+    name: 'main',
     component: Main,
     children: [
       {
-        path: '/error',
-        component: () => import('../views/Error'),
-        meta: {
-          requiresAuth: true
-        }
+        // path: '/error',
+        // component: () => import('../views/Error'),
+        // meta: {
+        //   requiresAuth: true
+        // }
       }
     ]
   },
@@ -24,8 +25,12 @@ const routes = [
     component: () => import('../views/Auth'),
     props: true
   },
-  { path: '/error', component: () => import('../views/Error') },
-  { path: '*', redirect: '/error' }
+  {
+    path: '/not-found',
+    name: 'not-fond',
+    component: () => import('../views/NotFound')
+  },
+  { path: '*', redirect: '/not-found' }
 ];
 
 const router = new VueRouter({

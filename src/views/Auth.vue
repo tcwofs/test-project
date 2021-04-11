@@ -18,8 +18,9 @@
 </template>
 
 <script>
-import Login from '../components/Auth/Login.vue';
-import Register from '../components/Auth/Register.vue';
+import Login from '../components/Auth/Login';
+import Register from '../components/Auth/Register';
+
 export default {
   name: 'Auth',
   components: { Register, Login },
