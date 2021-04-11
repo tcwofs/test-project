@@ -30,7 +30,7 @@
           class="ml-1"
           color="primary"
           outlined
-          :to="{ path: '/auth', props: { type: 'login' } }"
+          :to="{ path: '/auth', name: 'auth', params: { type: 'login' } }"
         >
           Login
         </v-btn>
@@ -39,12 +39,13 @@
           rounded
           class="ml-1"
           color="primary"
-          :to="{ path: '/auth', props: { type: 'register' } }"
+          :to="{ path: '/auth', name: 'auth', params: { type: 'register' } }"
         >
           Register
         </v-btn>
         <v-btn
           v-if="!!getName()"
+          outlined
           rounded
           class="ml-1"
           color="primary"
@@ -61,7 +62,7 @@
           class="ml-1 no-background-hover"
           :ripple="false"
           icon
-          :to="{ path: '/auth', props: { type: 'login' } }"
+          :to="{ path: '/auth', name: 'auth', params: { type: 'login' } }"
         >
           <v-icon>mdi-login-variant</v-icon>
         </v-btn>
@@ -72,7 +73,7 @@
           class="ml-1 no-background-hover"
           :ripple="false"
           icon
-          :to="{ path: '/auth', props: { type: 'register' } }"
+          :to="{ path: '/auth', name: 'auth', params: { type: 'register' } }"
         >
           <v-icon>mdi-clipboard-edit-outline</v-icon>
         </v-btn>
@@ -100,7 +101,11 @@ export default {
     clipped: false
   }),
   methods: {
-    getName: () => JSON.parse(localStorage.getItem('user'))?.login,
+    getName: () => {
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (!user) return false;
+      return `${user?.firstName} ${user?.lastName}`;
+    },
     logout() {
       localStorage.removeItem('user');
       this.$router.push(
@@ -108,8 +113,6 @@ export default {
         () => {},
         () => this.$router.go(0)
       );
-
-      // this.$router.push('/logout');
     }
   }
 };

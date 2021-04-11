@@ -18,14 +18,14 @@ const routes = [
       }
     ]
   },
-  { path: '/auth', component: () => import('../views/Auth') },
-  { path: '/logout', component: () => import('../views/Empty') },
-  { path: '/error', component: () => import('../views/Error') },
   {
-    // others
-    path: '*',
-    redirect: '/error'
-  }
+    path: '/auth',
+    name: 'auth',
+    component: () => import('../views/Auth'),
+    props: true
+  },
+  { path: '/error', component: () => import('../views/Error') },
+  { path: '*', redirect: '/error' }
 ];
 
 const router = new VueRouter({

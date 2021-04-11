@@ -2,19 +2,19 @@
   <div class="pa-5">
     <form @submit.prevent="submit">
       <v-text-field
-        v-model.trim="login"
+        v-model.trim="user.login"
         :error-messages="loginErrors"
-        label="Логин"
-        color="accent"
+        label="Login"
+        color="primary"
         outlined
         dense
-        @input="$v.login.$touch()"
-        @blur="$v.login.$touch()"
+        @input="$v.user.login.$touch()"
+        @blur="$v.user.login.$touch()"
       />
       <v-text-field
-        v-model="password"
-        label="Пароль"
-        color="accent"
+        v-model="user.password"
+        label="Password"
+        color="primary"
         class="mb-2"
         outlined
         dense
@@ -22,13 +22,23 @@
         :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
         :type="show ? 'text' : 'password'"
         @click:append="show = !show"
-        @input="$v.password.$touch()"
-        @blur="$v.password.$touch()"
+        @input="$v.user.password.$touch()"
+        @blur="$v.user.password.$touch()"
       />
 
       <v-row no-gutters class="px-0 align-center">
+        <router-link
+          to="/"
+          class="text--disabled"
+          :event="!loading ? 'click' : ''"
+          :disabled="loading"
+          href="javascript:void(0)"
+        >
+          Go Back
+        </router-link>
         <v-spacer />
         <v-btn
+          rounded
           color="primary"
           type="submit"
           :loading="loading"
@@ -37,7 +47,6 @@
           }"
         >
           Войти
-          <v-icon right>mdi-login-variant</v-icon>
         </v-btn>
       </v-row>
     </form>
@@ -51,29 +60,35 @@ import { mapActions } from 'vuex';
 export default {
   name: 'Login',
   data: () => ({
-    login: '',
-    password: '',
+    user: {
+      login: '',
+      password: ''
+    },
     show: false,
     loading: false,
     error: false,
     timeout: null
   }),
   validations: {
-    login: {
-      required
-    },
-    password: {
-      required
+    user: {
+      login: {
+        required
+      },
+      password: {
+        required
+      }
     }
   },
   computed: {
     loginErrors() {
-      if (!this.$v.login.$dirty) return '';
-      return !this.$v.login.required ? 'Укажите корректный логин.' : '';
+      if (!this.$v.user.login.$dirty) return '';
+      return !this.$v.user.login.required ? 'Please enter correct login.' : '';
     },
     passwordErrors() {
-      if (!this.$v.password.$dirty) return '';
-      return !this.$v.password.required ? 'Укажите пароль.' : '';
+      if (!this.$v.user.password.$dirty) return '';
+      return !this.$v.user.password.required
+        ? 'Please enter your password.'
+        : '';
     }
   },
   methods: {
@@ -87,10 +102,7 @@ export default {
       this.timeout && clearTimeout(this.timeout);
 
       try {
-        const response = await this.tryToLogin({
-          login: this.login,
-          password: this.password
-        });
+        const response = await this.tryToLogin(this.user);
 
         if (response) {
           this.loading = false;

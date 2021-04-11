@@ -13,7 +13,15 @@ export default {
   actions: {
     login(_, user) {
       return new Promise((resolve) => {
-        localStorage.setItem('user', JSON.stringify({ ...user, token: 'asd' }));
+        localStorage.setItem(
+          'user',
+          JSON.stringify({
+            ...user,
+            token: 'asd',
+            firstName: 'Test',
+            lastName: 'User'
+          })
+        );
         setTimeout(() => {
           resolve(true);
         }, 2000);
