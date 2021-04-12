@@ -1,19 +1,12 @@
 <template>
   <div v-if="$route.path !== '/auth'">
-    <v-navigation-drawer
-      v-if="!!getName()"
-      v-model="drawer"
-      :clipped="clipped"
-      app
-      dark
-    >
-    </v-navigation-drawer>
+    <Drawerbar :drawer.sync="drawer" :get-name="getName" />
     <v-app-bar
       fixed
       app
       flat
       dense
-      :clipped-left="clipped"
+      :clipped-left="false"
       :class="[`${appBarClass}-background`]"
     >
       <v-btn
@@ -155,13 +148,22 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
+import Drawerbar from './Drawerbar';
+
 export default {
-  name: 'Drawerbar',
+  name: 'Navbar',
+  components: { Drawerbar },
   data: () => ({
     drawer: !!+localStorage.getItem('drawer'),
     clipped: false,
     appBarClass: 'no'
   }),
+  computed: {
+    ...mapGetters({
+      getUser: 'global/getUser'
+    })
+  },
   watch: {
     drawer(newStatus) {
       localStorage.setItem('drawer', +newStatus);
@@ -174,15 +176,19 @@ export default {
     window.removeEventListener('scroll', this.onScroll);
   },
   methods: {
+    ...mapActions({
+      removeUser: 'global/logout'
+    }),
     onScroll() {
       this.appBarClass = window.pageYOffset > 64 ? 'white' : 'no';
     },
-    getName: () => {
-      const user = JSON.parse(localStorage.getItem('user'));
+    getName() {
+      const user = this.getUser;
       if (!user) return false;
       return `${user?.firstName} ${user?.lastName}`;
     },
     logout() {
+      this.removeUser();
       localStorage.removeItem('user');
       this.$router.push(
         '/',
