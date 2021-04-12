@@ -1,26 +1,6 @@
 <template>
   <div>
-    <v-row v-if="['loading', 'error'].includes(getDataStatus)" dense>
-      <v-col cols="12">
-        <v-progress-circular
-          v-if="getDataStatus === 'loading'"
-          :size="200"
-          :width="7"
-          color="primary"
-          indeterminate
-        />
-        <row v-else-if="getDataStatus === 'error'">
-          <v-col cols="12">
-            <v-icon :size="200" color="primary"> mdi-close </v-icon>
-          </v-col>
-          <v-col cols="12" class="d-flex justify-center">
-            <v-btn rounded color="primary" large @click="dataDownload()">
-              Retry
-            </v-btn>
-          </v-col>
-        </row>
-      </v-col>
-    </v-row>
+    <error-loading v-if="['loading', 'error'].includes(getDataStatus)" />
     <v-row
       v-else
       dense
@@ -32,7 +12,7 @@
       ]"
     >
       <v-col
-        v-for="card in getData.daily"
+        v-for="card in getDataDaily"
         :key="card.dt"
         cols="12"
         sm="6"
@@ -46,21 +26,17 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapGetters } from 'vuex';
+import ErrorLoading from '../ErrorLoading';
 import Tile from './Tile';
 
 export default {
   name: 'Home',
-  components: { Tile },
+  components: { Tile, ErrorLoading },
   computed: {
     ...mapGetters({
       getDataStatus: 'global/getDataStatus',
-      getData: 'global/getData'
-    })
-  },
-  methods: {
-    ...mapActions({
-      dataDownload: 'global/dataDownload'
+      getDataDaily: 'global/getDataDaily'
     })
   }
 };
@@ -69,9 +45,11 @@ export default {
 <style lang="scss">
 .max-width {
   max-width: 1000px;
+  width: 100vw;
 }
 
 .max-width-mobile {
   max-width: 95vw;
+  width: 100vw;
 }
 </style>

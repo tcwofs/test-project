@@ -18,10 +18,12 @@ export default {
   components: { Navbar },
   created() {
     this.dataDownload();
+    this.userDataDownload();
   },
   methods: {
     ...mapActions({
-      dataDownload: 'global/dataDownload'
+      dataDownload: 'global/dataDownload',
+      userDataDownload: 'global/userDataDownload'
     })
   }
 };
