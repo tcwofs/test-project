@@ -1,6 +1,12 @@
 <template>
   <div v-if="$route.path !== '/auth'">
-    <v-navigation-drawer v-model="drawer" :clipped="clipped" app dark>
+    <v-navigation-drawer
+      v-if="!!getName()"
+      v-model="drawer"
+      :clipped="clipped"
+      app
+      dark
+    >
     </v-navigation-drawer>
     <v-app-bar
       fixed
@@ -151,9 +157,14 @@
 export default {
   name: 'Drawerbar',
   data: () => ({
-    drawer: false,
+    drawer: !!+localStorage.getItem('drawer'),
     clipped: false
   }),
+  watch: {
+    drawer(newStatus) {
+      localStorage.setItem('drawer', +newStatus);
+    }
+  },
   methods: {
     getName: () => {
       const user = JSON.parse(localStorage.getItem('user'));
