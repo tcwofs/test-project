@@ -1,7 +1,21 @@
-import router from '../router';
+import Axios from 'axios';
+
+const http = Axios.create({
+  baseURL: 'https://api.openweathermap.org/data/2.5'
+});
 
 export default {
   namespaced: true,
+  state: {
+    data: null,
+    loading: false,
+    error: false
+  },
+  getters: {
+    getData: (state) => state.data,
+    getDataStatus: (state) =>
+      state.loading ? 'loading' : state.error ? 'error' : 'done'
+  },
   mutations: {
     /**
      * Updates a specific property in the store
@@ -27,25 +41,31 @@ export default {
         }, 2000);
       });
     },
-    logout: ({ commit, dispatch }) =>
-      new Promise((resolve) => {
-        dispatch(
-          'http/serverSendRequest',
-          {
-            method: 'post',
-            url: '/auth/logout'
-          },
-          { root: true }
-        ).finally(() =>
-          commit('updateProperty', {
-            property: 'accessToken',
-            value: ''
-          })
-        );
+    dataDownload: async ({ state, commit }) => {
+      try {
+        state.loading = true;
+        const { data } = await http({
+          method: 'get',
+          url: '/onecall',
+          params: {
+            units: 'metric',
+            lat: '49.988358',
+            lon: '36.232845',
+            exclude: 'current,minutely',
+            appid: process.env.VUE_APP_OPEN_WEATHER_KEY
+          }
+        });
 
-        dispatch('tabs/clearTabs', null, { root: true });
-        router.push('/');
-        resolve();
-      })
+        await commit('updateProperty', {
+          property: 'data',
+          value: data
+        });
+      } catch (error) {
+        state.error = true;
+        console.error(error);
+      } finally {
+        state.loading = false;
+      }
+    }
   }
 };

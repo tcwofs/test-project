@@ -11,10 +11,19 @@
 
 <script>
 import Drawerbar from '@/components/Drawerbar';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'App',
-  components: { Drawerbar }
+  components: { Drawerbar },
+  created() {
+    this.dataDownload();
+  },
+  methods: {
+    ...mapActions({
+      dataDownload: 'global/dataDownload'
+    })
+  }
 };
 </script>
 

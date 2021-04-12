@@ -111,10 +111,8 @@ import {
   requiredIf,
   minLength,
   maxLength,
-  alpha,
   numeric,
   email
-  // sameAs
 } from 'vuelidate/lib/validators';
 import { mapActions } from 'vuex';
 
@@ -140,11 +138,11 @@ export default {
         required,
         minLength: minLength(2),
         maxLength: maxLength(128),
-        alpha
+        alpha: (firstName) => /^([a-zA-Zа-яА-Я]+)$/.test(firstName)
       },
       lastName: {
         required,
-        alpha,
+        alpha: (firstName) => /^([a-zA-Zа-яА-Я]+)$/.test(firstName),
         minLength: minLength(2),
         maxLength: maxLength(128)
       },
