@@ -39,7 +39,6 @@ export default {
       getUserData: 'global/getUserData'
     })
   }
-  name: 'Home'
 };
 </script>
 
