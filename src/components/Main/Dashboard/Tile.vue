@@ -1,7 +1,7 @@
 <template>
   <v-card width="100%">
     <v-card-text>
-      <div>{{ convertDate(card.dt) }}</div>
+      <div>{{ convertDateWithTime(card.dt) }}</div>
       <v-row dense class="my-2" align="center">
         <v-col cols="4">
           <v-icon size="70">
@@ -13,7 +13,7 @@
             {{ card.weather[0].main }}
           </div>
           <p class="text-right">
-            {{ `${card.weather[0].description}, ${card.temp.day.toFixed()}°C` }}
+            {{ `${card.weather[0].description}, ${card.temp.toFixed()}°C` }}
           </p>
         </v-col>
       </v-row>
@@ -25,7 +25,7 @@
 import weatherMixin from '@/helpers/weatherMixin';
 
 export default {
-  name: 'HomeTile',
+  name: 'DashboardTile',
   mixins: [weatherMixin],
   props: {
     card: {

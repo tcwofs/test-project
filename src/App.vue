@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <Drawerbar />
+    <Navbar />
     <v-main>
       <v-container fluid fill-height class="justify-center">
         <router-view />
@@ -10,18 +10,20 @@
 </template>
 
 <script>
-import Drawerbar from '@/components/Drawerbar';
+import Navbar from '@/components/Navbar';
 import { mapActions } from 'vuex';
 
 export default {
   name: 'App',
-  components: { Drawerbar },
+  components: { Navbar },
   created() {
     this.dataDownload();
+    this.userDataDownload();
   },
   methods: {
     ...mapActions({
-      dataDownload: 'global/dataDownload'
+      dataDownload: 'global/dataDownload',
+      userDataDownload: 'global/userDataDownload'
     })
   }
 };
