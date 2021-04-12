@@ -12,8 +12,9 @@
       fixed
       app
       flat
+      dense
       :clipped-left="clipped"
-      style="background-color: transparent"
+      :class="[`${appBarClass}-background`]"
     >
       <v-btn
         v-if="!!getName()"
@@ -158,14 +159,24 @@ export default {
   name: 'Drawerbar',
   data: () => ({
     drawer: !!+localStorage.getItem('drawer'),
-    clipped: false
+    clipped: false,
+    appBarClass: 'no'
   }),
   watch: {
     drawer(newStatus) {
       localStorage.setItem('drawer', +newStatus);
     }
   },
+  mounted() {
+    window.addEventListener('scroll', this.onScroll);
+  },
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.onScroll);
+  },
   methods: {
+    onScroll() {
+      this.appBarClass = window.pageYOffset > 64 ? 'white' : 'no';
+    },
     getName: () => {
       const user = JSON.parse(localStorage.getItem('user'));
       if (!user) return false;
@@ -183,4 +194,12 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss">
+.white-background {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.no-background {
+  background-color: transparent !important;
+}
+</style>
