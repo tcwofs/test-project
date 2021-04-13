@@ -19,8 +19,8 @@
       </div>
       <v-divider v-if="!miniVariantSync" />
       <v-list-item
-        v-for="commentary in details"
-        :key="commentary.id"
+        v-for="(commentary, index) in details"
+        :key="index"
         color="secondary"
       >
         <v-list-item-icon>
@@ -28,7 +28,7 @@
         </v-list-item-icon>
         <v-list-item-content>
           <v-list-item-title class="secondary--text">
-            {{ `${commentary.text}` }}
+            {{ `${commentary}` }}
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
@@ -38,6 +38,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import { eventBus } from '@/plugins/eventBus';
 import weatherMixin from '@/helpers/weatherMixin';
 
 export default {
@@ -66,13 +67,27 @@ export default {
       }
     }
   },
-  async mounted() {
-    this.details = (await this.getDetail(this.$route.params.id)).comments;
+  watch: {
+    '$route.path': function () {
+      this.loadData();
+    }
+  },
+  mounted() {
+    eventBus.$on('comments-update', this.loadData);
+    this.loadData();
+  },
+  beforeDestroy() {
+    eventBus.$off();
   },
   methods: {
     ...mapActions({
       getDetail: 'user/getDetail'
-    })
+    }),
+    async loadData() {
+      console.log('asd');
+      this.details = (await this.getDetail(this.$route.params.id))?.comments;
+      console.log(this.details);
+    }
   }
 };
 </script>
