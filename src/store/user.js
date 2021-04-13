@@ -75,7 +75,7 @@ export default {
             ?.find((el) => el.randomDetails?.find((item) => item.id === id))
             .randomDetails?.find((el) => el.id === id)
         ),
-    addRect: (_, { id, postId, rect }) => {
+    addRect: ({ commit }, { id, postId, rect }) => {
       const userData = JSON.parse(localStorage.getItem('userData'));
 
       userData
@@ -83,17 +83,25 @@ export default {
         .randomDetails.find((el) => el.id === id)
         .rects.push(rect);
 
+      commit('updateProperty', {
+        property: 'userData',
+        value: userData
+      });
+
       localStorage.setItem('userData', JSON.stringify(userData));
     },
-    addComment: (_, { id, postId, comment }) => {
+    addComment: ({ commit }, { id, postId, comment }) => {
       const userData = JSON.parse(localStorage.getItem('userData'));
-
-      console.log(comment);
 
       userData
         .find((el) => el.id === postId)
         .randomDetails.find((el) => el.id === id)
         .comments.push(comment);
+
+      commit('updateProperty', {
+        property: 'userData',
+        value: userData
+      });
 
       localStorage.setItem('userData', JSON.stringify(userData));
 

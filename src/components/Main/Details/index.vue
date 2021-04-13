@@ -106,6 +106,7 @@ export default {
     draw(e) {
       if (!this.painting) return;
 
+      this.ctx.lineWidth = 3;
       this.ctx.strokeStyle = '#39363a';
 
       const [x, y] = this.getMousePos(e);
