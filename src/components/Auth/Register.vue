@@ -156,6 +156,7 @@ export default {
         required: requiredIf(function (user) {
           return !user.email;
         }),
+        minLength: minLength(6),
         numeric
       },
       password: {
@@ -181,6 +182,8 @@ export default {
     phoneErrors() {
       if (!this.$v.user.phone.$dirty) return '';
       if (!this.$v.user.phone.numeric) return 'Field must conatin only numbers';
+      if (!this.$v.user.phone.minLength)
+        return `Min length of the phone is ${this.$v.user.password.$params.minLength.min}`;
 
       return !this.$v.user.phone.required
         ? 'Please enter correct email or phone.'
