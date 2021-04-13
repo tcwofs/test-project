@@ -39,22 +39,12 @@ export default {
         'user/updateProperty',
         {
           property: 'userData',
-          value: null
+          value: []
         },
         { root: true }
       );
-      commit(
-        'user/updateProperty',
-        {
-          property: 'userRect',
-          value: null
-        },
-        { root: true }
-      );
-
       localStorage.removeItem('user');
       localStorage.removeItem('userData');
-      localStorage.removeItem('userRect');
     }
   }
 };

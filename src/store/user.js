@@ -1,17 +1,16 @@
 import { nanoid } from 'nanoid';
 import { getRandomInt } from '@/helpers';
+import { eventBus } from '@/plugins/eventBus';
 
 export default {
   namespaced: true,
   state: {
     user: null,
-    userData: [],
-    userRects: []
+    userData: []
   },
   getters: {
     getUser: (state) => state.user,
-    getUserData: (state) => state.userData,
-    getUserRects: (state) => state.userRects
+    getUserData: (state) => state.userData
   },
   mutations: {
     /**
@@ -39,7 +38,7 @@ export default {
         const id = nanoid(5);
         el = {
           id,
-          rect: [],
+          rects: [],
           comments: [],
           url: `${[3, getRandomInt(8), getRandomInt(8)].join('/')}.png`,
           postId
@@ -73,8 +72,32 @@ export default {
         .then(JSON.parse)
         .then((data) =>
           data
-            .find((el) => el.randomDetails.find((item) => item.id === id))
-            .randomDetails.find((el) => el.id === id)
-        )
+            ?.find((el) => el.randomDetails?.find((item) => item.id === id))
+            .randomDetails?.find((el) => el.id === id)
+        ),
+    addRect: (_, { id, postId, rect }) => {
+      const userData = JSON.parse(localStorage.getItem('userData'));
+
+      userData
+        .find((el) => el.id === postId)
+        .randomDetails.find((el) => el.id === id)
+        .rects.push(rect);
+
+      localStorage.setItem('userData', JSON.stringify(userData));
+    },
+    addComment: (_, { id, postId, comment }) => {
+      const userData = JSON.parse(localStorage.getItem('userData'));
+
+      console.log(comment);
+
+      userData
+        .find((el) => el.id === postId)
+        .randomDetails.find((el) => el.id === id)
+        .comments.push(comment);
+
+      localStorage.setItem('userData', JSON.stringify(userData));
+
+      eventBus.$emit('comments-update');
+    }
   }
 };
