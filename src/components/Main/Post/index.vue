@@ -84,13 +84,21 @@ export default {
       getUserData: 'user/getUserData'
     })
   },
-  async mounted() {
-    this.post = (await this.getPost(this.$route.params.id))[0];
+  watch: {
+    '$route.path': function () {
+      this.loadData();
+    }
+  },
+  mounted() {
+    this.loadData();
   },
   methods: {
     ...mapActions({
       getPost: 'user/getPost'
-    })
+    }),
+    async loadData() {
+      this.post = (await this.getPost(this.$route.params.id))[0];
+    }
   }
 };
 </script>

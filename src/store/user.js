@@ -36,8 +36,9 @@ export default {
       const postId = nanoid(5);
 
       const randomDetails = [...Array(4).keys()].map((el) => {
+        const id = nanoid(5);
         el = {
-          id: nanoid(5),
+          id,
           rect: [],
           comments: [],
           url: `${[3, getRandomInt(8), getRandomInt(8)].join('/')}.png`,
@@ -71,9 +72,9 @@ export default {
       Promise.resolve(localStorage.getItem('userData'))
         .then(JSON.parse)
         .then((data) =>
-          data.filter((el) =>
-            Array.isArray(el) ? el.filter((item) => item.id === id) : null
-          )
+          data
+            .find((el) => el.randomDetails.find((item) => item.id === id))
+            .randomDetails.find((el) => el.id === id)
         )
   }
 };

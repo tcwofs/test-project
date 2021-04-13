@@ -1,71 +1,37 @@
 <template>
   <v-navigation-drawer
     v-if="$route.path.includes('/details') && isAuthorized"
-    v-model="drawerLocal"
+    v-model="commentLocal"
     right
     permanent
     expand-on-hover
     :clipped="false"
     color="primary"
     app
+    :mini-variant.sync="miniVariantSync"
   >
     <v-list rounded>
-      <div v-if="['loading', 'error'].includes(getDataStatus)">
-        <v-list-item
-          v-if="getDataStatus === 'loading'"
-          class="align-center justify-center"
-        >
-          <v-progress-circular
-            v-if="getDataStatus === 'loading'"
-            :size="100"
-            :width="7"
-            color="secondary"
-            indeterminate
-          />
-        </v-list-item>
-        <v-list-item v-else-if="getDataStatus === 'error'">
-          <row>
-            <v-col cols="12">
-              <v-icon :size="200" color="secondary"> mdi-close </v-icon>
-            </v-col>
-            <v-col cols="12" class="d-flex justify-center">
-              <v-btn rounded color="secondary" large @click="dataDownload()">
-                <div class="primary--text">Retry</div>
-              </v-btn>
-            </v-col>
-          </row>
-        </v-list-item>
+      <div
+        v-if="!miniVariantSync"
+        class="d-flex mb-5 justify-center secondary--text text-display-1"
+      >
+        COMMENTS
       </div>
-
-      <div v-else>
-        <v-list-item
-          id="add-button"
-          class="justify-center"
-          color="secondary"
-          @click="addNewPost"
-        >
-          <v-icon color="secondary" size="36">mdi-plus</v-icon>
-        </v-list-item>
-
-        <v-list-item-group v-model="selectedItem" color="secondary" dark>
-          <v-list-item
-            v-for="card in getUserData"
-            :key="card.id"
-            :to="`/post/${card.id}`"
-          >
-            <v-list-item-icon>
-              <v-icon> {{ getIcon(card.weather[0].icon) }}</v-icon>
-            </v-list-item-icon>
-            <v-list-item-content>
-              <v-list-item-title>
-                {{
-                  `${convertDateWithTime(card.dt)}, ${card.temp.toFixed()}°C`
-                }}
-              </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list-item-group>
-      </div>
+      <v-divider v-if="!miniVariantSync" />
+      <v-list-item
+        v-for="commentary in details"
+        :key="commentary.id"
+        color="secondary"
+      >
+        <v-list-item-icon>
+          <v-icon color="secondary"> mdi-drag-vertical</v-icon>
+        </v-list-item-icon>
+        <v-list-item-content>
+          <v-list-item-title class="secondary--text">
+            {{ `${commentary.text}` }}
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>
@@ -75,21 +41,17 @@ import { mapActions, mapGetters } from 'vuex';
 import weatherMixin from '@/helpers/weatherMixin';
 
 export default {
-  name: 'Drawerbar',
+  name: 'Commentbar',
   mixins: [weatherMixin],
   props: {
     comment: {
       type: Boolean,
-      default: false
+      default: true
     }
   },
-  data: () => ({
-    selectedItem: null
-  }),
+  data: () => ({ details: null, miniVariantSync: true }),
   computed: {
     ...mapGetters({
-      getDataStatus: 'data/getDataStatus',
-      getUserData: 'user/getUserData',
       getUser: 'user/getUser'
     }),
     isAuthorized() {
@@ -104,17 +66,19 @@ export default {
       }
     }
   },
+  async mounted() {
+    this.details = (await this.getDetail(this.$route.params.id)).comments;
+  },
   methods: {
     ...mapActions({
-      dataDownload: 'data/dataDownload',
-      addNewPost: 'user/addNewPost'
+      getDetail: 'user/getDetail'
     })
   }
 };
 </script>
 
-<style lang="scss">
-#add-button {
-  border: #fbe9c1 dashed 2px;
+<style lang="scss" scoped>
+.v-divider {
+  border-color: #fbe9c1 !important;
 }
 </style>

@@ -200,7 +200,7 @@ export default {
   components: { Drawerbar, Commentbar },
   data: () => ({
     drawer: !!+localStorage.getItem('drawer'),
-    comment: false,
+    comment: true,
     clipped: false,
     appBarClass: 'no'
   }),

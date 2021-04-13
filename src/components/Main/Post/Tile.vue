@@ -2,8 +2,8 @@
   <v-card width="100%" :to="`/details/${detail.id}`">
     <v-img
       :src="`https://tile.openweathermap.org/map/wind_new/${detail.url}?appid=${api}`"
-      class="secondary darken-1"
-    ></v-img>
+      class="secondary"
+    />
   </v-card>
 </template>
 
