@@ -17,7 +17,7 @@ const weatherMixin = {
       const day = `0${date.getDate()}`.substr(-2);
       const month = `0${+date.getMonth() + 1}`.substr(-2);
 
-      return `${day}/${month} ${hours}:${minutes}`;
+      return `${day}/${month}, ${hours}:${minutes}`;
     },
     getIcon(iconCode) {
       switch (iconCode) {

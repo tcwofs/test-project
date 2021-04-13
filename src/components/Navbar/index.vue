@@ -20,19 +20,49 @@
       >
         <v-icon>mdi-menu</v-icon>
       </v-btn>
+      <v-btn
+        v-if="!!getName() && ['post', 'details'].includes($route.name)"
+        class="no-background-hover"
+        icon
+        color="primary"
+        :ripple="false"
+        depressed
+        @click.stop="$router.go(-1)"
+      >
+        <v-icon>mdi-arrow-left</v-icon>
+      </v-btn>
       <v-spacer />
-      <div v-if="!!getName()" class="mr-2 text--primary">
-        {{ `Hello, ${getName()}` }}
-      </div>
+
+      <v-tooltip v-if="!!getName()" bottom transition="fade-transition">
+        <template #activator="{ on }">
+          <div
+            class="mr-2 text--primary text-caption text-sm-body-1 text-truncate"
+            v-on="on"
+          >
+            {{ `Hello, ${getName()}` }}
+          </div>
+        </template>
+        <span> {{ `Hello, ${getName()}` }}</span>
+      </v-tooltip>
+
       <div class="d-none d-md-flex">
         <v-btn
-          v-if="!!getName() || $route.path !== '/'"
+          v-if="$route.path !== '/'"
           rounded
           class="ml-1"
           color="primary"
-          :to="{ path: $route.path === '/' ? '/dashboard' : '/' }"
+          to="/"
         >
-          {{ `${$route.path === '/' ? 'Dashboard' : 'Home'}` }}
+          Home
+        </v-btn>
+        <v-btn
+          v-if="!!getName() && $route.path !== '/dashboard'"
+          rounded
+          class="ml-1"
+          color="primary"
+          to="/dashboard"
+        >
+          Dashboard
         </v-btn>
         <v-btn
           v-if="!getName()"
@@ -40,7 +70,7 @@
           class="ml-1"
           color="primary"
           outlined
-          :to="{ path: '/auth', name: 'auth', params: { type: 'login' } }"
+          :to="{ name: 'auth', params: { type: 'login' } }"
         >
           Login
         </v-btn>
@@ -49,7 +79,7 @@
           rounded
           class="ml-1"
           color="primary"
-          :to="{ path: '/auth', name: 'auth', params: { type: 'register' } }"
+          :to="{ name: 'auth', params: { type: 'register' } }"
         >
           Register
         </v-btn>
@@ -66,7 +96,7 @@
       </div>
       <div class="d-flex d-md-none">
         <v-tooltip
-          v-if="!!getName() || $route.path !== '/'"
+          v-if="$route.path !== '/'"
           bottom
           transition="fade-transition"
         >
@@ -76,21 +106,32 @@
               class="ml-1 no-background-hover"
               :ripple="false"
               icon
-              :to="{ path: $route.path === '/' ? '/dashboard' : '/' }"
+              to="/"
               v-on="on"
             >
-              <v-icon>
-                {{
-                  `${
-                    $route.path === '/'
-                      ? 'mdi-view-dashboard-outline'
-                      : 'mdi-home-outline'
-                  }`
-                }}
-              </v-icon>
+              <v-icon> mdi-home-outline </v-icon>
             </v-btn>
           </template>
-          <span>{{ `${$route.path === '/' ? 'Dashboard' : 'Home'}` }}</span>
+          <span>Home</span>
+        </v-tooltip>
+        <v-tooltip
+          v-if="!!getName() && $route.path !== '/dashboard'"
+          bottom
+          transition="fade-transition"
+        >
+          <template #activator="{ on }">
+            <v-btn
+              color="primary"
+              class="ml-1 no-background-hover"
+              :ripple="false"
+              icon
+              to="/dashboard"
+              v-on="on"
+            >
+              <v-icon> mdi-view-dashboard-outline </v-icon>
+            </v-btn>
+          </template>
+          <span> Dashboard</span>
         </v-tooltip>
         <v-tooltip v-if="!getName()" bottom transition="fade-transition">
           <template #activator="{ on }">
@@ -189,7 +230,6 @@ export default {
     },
     logout() {
       this.removeUser();
-      localStorage.removeItem('user');
       this.$router.push(
         '/',
         () => {},

@@ -1,4 +1,5 @@
 import Axios from 'axios';
+import { nanoid } from 'nanoid';
 import { getRandomInt } from '@/helpers';
 
 const http = Axios.create({
@@ -59,6 +60,18 @@ export default {
         property: 'user',
         value: null
       });
+      commit('updateProperty', {
+        property: 'userData',
+        value: null
+      });
+      commit('updateProperty', {
+        property: 'userRect',
+        value: null
+      });
+
+      localStorage.removeItem('user');
+      localStorage.removeItem('userData');
+      localStorage.removeItem('userRect');
     },
     dataDownload: async ({ state, commit }) => {
       try {
@@ -96,17 +109,23 @@ export default {
         value: JSON.parse(localStorage.getItem('user')) ?? null
       });
     },
-    addNewEntry: ({ commit, getters }) => {
-      const userDataUpdated = [
-        getters.getDataHourly[getRandomInt(getters.getDataHourly.length)],
-        ...getters.getUserData
-      ];
+    addNewPost: ({ commit, getters }) => {
+      const randomPost = {
+        id: nanoid(5),
+        ...getters.getDataHourly[getRandomInt(getters.getDataHourly.length)]
+      };
+
+      const userDataUpdated = [randomPost, ...getters.getUserData];
 
       commit('updateProperty', {
         property: 'userData',
         value: userDataUpdated
       });
       localStorage.setItem('userData', JSON.stringify(userDataUpdated));
-    }
+    },
+    getPost: (_, id) =>
+      Promise.resolve(localStorage.getItem('userData'))
+        .then(JSON.parse)
+        .then((data) => data.filter((el) => el.id === id))
   }
 };

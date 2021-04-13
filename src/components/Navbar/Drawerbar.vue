@@ -39,13 +39,17 @@
           id="add-button"
           class="justify-center"
           color="secondary"
-          @click="addNewEntry"
+          @click="addNewPost"
         >
           <v-icon color="secondary" size="36">mdi-plus</v-icon>
         </v-list-item>
 
         <v-list-item-group v-model="selectedItem" color="secondary" dark>
-          <v-list-item v-for="card in getUserData" :key="card.dt">
+          <v-list-item
+            v-for="card in getUserData"
+            :key="card.id"
+            :to="`/post/${card.id}`"
+          >
             <v-list-item-icon>
               <v-icon> {{ getIcon(card.weather[0].icon) }}</v-icon>
             </v-list-item-icon>
@@ -104,7 +108,7 @@ export default {
   methods: {
     ...mapActions({
       dataDownload: 'global/dataDownload',
-      addNewEntry: 'global/addNewEntry'
+      addNewPost: 'global/addNewPost'
     })
   }
 };
