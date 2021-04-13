@@ -93,7 +93,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      enter: 'global/enter'
+      enter: 'auth/enter'
     }),
     async submit() {
       this.$v.$touch();

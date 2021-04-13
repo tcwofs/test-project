@@ -89,9 +89,9 @@ export default {
   }),
   computed: {
     ...mapGetters({
-      getDataStatus: 'global/getDataStatus',
-      getUserData: 'global/getUserData',
-      getUser: 'global/getUser'
+      getDataStatus: 'data/getDataStatus',
+      getUserData: 'user/getUserData',
+      getUser: 'user/getUser'
     }),
     isAuthorized() {
       return !!this.getUser;
@@ -107,8 +107,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      dataDownload: 'global/dataDownload',
-      addNewPost: 'global/addNewPost'
+      dataDownload: 'data/dataDownload',
+      addNewPost: 'user/addNewPost'
     })
   }
 };

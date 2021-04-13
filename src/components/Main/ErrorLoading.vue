@@ -29,12 +29,12 @@ export default {
   name: 'ErrorLoading',
   computed: {
     ...mapGetters({
-      getDataStatus: 'global/getDataStatus'
+      getDataStatus: 'data/getDataStatus'
     })
   },
   methods: {
     ...mapActions({
-      dataDownload: 'global/dataDownload'
+      dataDownload: 'data/dataDownload'
     })
   }
 };

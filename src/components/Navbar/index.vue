@@ -202,7 +202,7 @@ export default {
   }),
   computed: {
     ...mapGetters({
-      getUser: 'global/getUser'
+      getUser: 'user/getUser'
     })
   },
   watch: {
@@ -218,7 +218,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      removeUser: 'global/logout'
+      removeUser: 'auth/logout'
     }),
     onScroll() {
       this.appBarClass = window.pageYOffset > 64 ? 'white' : 'no';

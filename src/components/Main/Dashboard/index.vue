@@ -51,13 +51,13 @@ export default {
   components: { ErrorLoading, Tile },
   computed: {
     ...mapGetters({
-      getDataStatus: 'global/getDataStatus',
-      getUserData: 'global/getUserData'
+      getDataStatus: 'data/getDataStatus',
+      getUserData: 'user/getUserData'
     })
   },
   methods: {
     ...mapActions({
-      addNewPost: 'global/addNewPost'
+      addNewPost: 'user/addNewPost'
     })
   }
 };

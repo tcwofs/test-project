@@ -17,7 +17,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      getPost: 'global/getPost'
+      getPost: 'user/getPost'
     })
   }
 };

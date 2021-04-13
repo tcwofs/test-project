@@ -22,8 +22,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      dataDownload: 'global/dataDownload',
-      userDataDownload: 'global/userDataDownload'
+      dataDownload: 'data/dataDownload',
+      userDataDownload: 'user/userDataDownload'
     })
   }
 };

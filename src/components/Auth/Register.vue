@@ -203,7 +203,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      enter: 'global/enter'
+      enter: 'auth/enter'
     }),
     nameErrors(type) {
       if (!this.$v.user[type] || !this.$v.user[type].$dirty) return '';
