@@ -84,9 +84,7 @@ export default {
       getDetail: 'user/getDetail'
     }),
     async loadData() {
-      console.log('asd');
       this.details = (await this.getDetail(this.$route.params.id))?.comments;
-      console.log(this.details);
     }
   }
 };

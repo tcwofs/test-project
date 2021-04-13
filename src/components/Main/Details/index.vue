@@ -79,12 +79,6 @@ export default {
         h: y - this.startPosition.y
       };
 
-      console.log(
-        `${Object.values(rect)
-          .map((el) => el.toFixed())
-          .join(', ')}`
-      );
-
       const message = `${Object.values(rect)
         .map((el) => el.toFixed())
         .join(', ')}`;
