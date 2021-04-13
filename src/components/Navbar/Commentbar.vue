@@ -1,7 +1,10 @@
 <template>
   <v-navigation-drawer
-    v-if="isAuthorized"
+    v-if="$route.path.includes('/details') && isAuthorized"
     v-model="drawerLocal"
+    right
+    permanent
+    expand-on-hover
     :clipped="false"
     color="primary"
     app
@@ -75,7 +78,7 @@ export default {
   name: 'Drawerbar',
   mixins: [weatherMixin],
   props: {
-    drawer: {
+    comment: {
       type: Boolean,
       default: false
     }
@@ -92,12 +95,12 @@ export default {
     isAuthorized() {
       return !!this.getUser;
     },
-    drawerLocal: {
+    commentLocal: {
       get() {
-        return this.drawer;
+        return this.comment;
       },
       set(value) {
-        this.$emit('update:drawer', value);
+        this.$emit('update:comment', value);
       }
     }
   },

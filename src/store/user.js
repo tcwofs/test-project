@@ -33,8 +33,23 @@ export default {
       });
     },
     addNewPost: ({ commit, getters, rootGetters }) => {
+      const postId = nanoid(5);
+
+      const randomDetails = [...Array(4).keys()].map((el) => {
+        el = {
+          id: nanoid(5),
+          rect: [],
+          comments: [],
+          url: `${[3, getRandomInt(8), getRandomInt(8)].join('/')}.png`,
+          postId
+        };
+
+        return el;
+      });
+
       const randomPost = {
-        id: nanoid(5),
+        id: postId,
+        randomDetails,
         ...rootGetters['data/getDataHourly'][
           getRandomInt(rootGetters['data/getDataHourly'].length)
         ]
@@ -51,6 +66,14 @@ export default {
     getPost: (_, id) =>
       Promise.resolve(localStorage.getItem('userData'))
         .then(JSON.parse)
-        .then((data) => data.filter((el) => el.id === id))
+        .then((data) => data.filter((el) => el.id === id)),
+    getDetail: (_, id) =>
+      Promise.resolve(localStorage.getItem('userData'))
+        .then(JSON.parse)
+        .then((data) =>
+          data.filter((el) =>
+            Array.isArray(el) ? el.filter((item) => item.id === id) : null
+          )
+        )
   }
 };

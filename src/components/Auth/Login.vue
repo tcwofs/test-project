@@ -1,5 +1,8 @@
 <template>
   <div class="pa-5">
+    <div class="d-flex justify-center mb-2 text--disabled">
+      no backend verification
+    </div>
     <form @submit.prevent="submit">
       <v-text-field
         v-model.trim="user.login"

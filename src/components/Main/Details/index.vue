@@ -1,5 +1,5 @@
 <template>
-  <div>post {{ $route.params.id }}</div>
+  <div>details {{ $route.params.id }}</div>
 </template>
 
 <script>

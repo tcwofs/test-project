@@ -1,12 +1,14 @@
 <template>
   <div v-if="$route.path !== '/auth'">
-    <Drawerbar :drawer.sync="drawer" :get-name="getName" />
+    <Drawerbar :drawer.sync="drawer" />
+    <Commentbar :comment.sync="comment" />
     <v-app-bar
       fixed
       app
       flat
       dense
       :clipped-left="false"
+      :clipped-right="false"
       :class="[`${appBarClass}-background`]"
     >
       <v-btn
@@ -191,12 +193,14 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import Drawerbar from './Drawerbar';
+import Commentbar from './Commentbar';
 
 export default {
   name: 'Navbar',
-  components: { Drawerbar },
+  components: { Drawerbar, Commentbar },
   data: () => ({
     drawer: !!+localStorage.getItem('drawer'),
+    comment: false,
     clipped: false,
     appBarClass: 'no'
   }),
