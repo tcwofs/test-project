@@ -2,6 +2,8 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Main from '@/views/Main';
 import Home from '@/components/Main/Home';
+import Post from '@/components/Main/Post';
+import Details from '@/components/Main/Details';
 
 Vue.use(VueRouter);
 
@@ -20,6 +22,22 @@ const routes = [
         path: '/dashboard',
         name: 'dashboard',
         component: () => import('../components/Main/Dashboard'),
+        meta: {
+          requiresAuth: true
+        }
+      },
+      {
+        path: '/post/:id',
+        name: 'post',
+        component: Post,
+        meta: {
+          requiresAuth: true
+        }
+      },
+      {
+        path: '/details/:id',
+        name: 'details',
+        component: Details,
         meta: {
           requiresAuth: true
         }

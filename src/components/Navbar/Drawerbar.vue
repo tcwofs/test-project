@@ -39,13 +39,17 @@
           id="add-button"
           class="justify-center"
           color="secondary"
-          @click="addNewEntry"
+          @click="addNewPost"
         >
           <v-icon color="secondary" size="36">mdi-plus</v-icon>
         </v-list-item>
 
         <v-list-item-group v-model="selectedItem" color="secondary" dark>
-          <v-list-item v-for="card in getUserData" :key="card.dt">
+          <v-list-item
+            v-for="card in getUserData"
+            :key="card.id"
+            :to="`/post/${card.id}`"
+          >
             <v-list-item-icon>
               <v-icon> {{ getIcon(card.weather[0].icon) }}</v-icon>
             </v-list-item-icon>
@@ -74,10 +78,6 @@ export default {
     drawer: {
       type: Boolean,
       default: false
-    },
-    getName: {
-      type: Function,
-      default: () => {}
     }
   },
   data: () => ({
@@ -85,9 +85,9 @@ export default {
   }),
   computed: {
     ...mapGetters({
-      getDataStatus: 'global/getDataStatus',
-      getUserData: 'global/getUserData',
-      getUser: 'global/getUser'
+      getDataStatus: 'data/getDataStatus',
+      getUserData: 'user/getUserData',
+      getUser: 'user/getUser'
     }),
     isAuthorized() {
       return !!this.getUser;
@@ -103,8 +103,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      dataDownload: 'global/dataDownload',
-      addNewEntry: 'global/addNewEntry'
+      dataDownload: 'data/dataDownload',
+      addNewPost: 'user/addNewPost'
     })
   }
 };

@@ -35,8 +35,8 @@ export default {
   components: { Tile, ErrorLoading },
   computed: {
     ...mapGetters({
-      getDataStatus: 'global/getDataStatus',
-      getDataDaily: 'global/getDataDaily'
+      getDataStatus: 'data/getDataStatus',
+      getDataDaily: 'data/getDataDaily'
     })
   }
 };

@@ -1,5 +1,5 @@
 <template>
-  <v-card width="100%">
+  <v-card width="100%" :to="`/post/${card.id}`">
     <v-card-text>
       <div>{{ convertDateWithTime(card.dt) }}</div>
       <v-row dense class="my-2" align="center">

@@ -11,9 +11,25 @@
         }`
       ]"
     >
+      <v-col cols="12" sm="6" md="3" class="d-flex">
+        <v-card width="100%" @click="addNewPost">
+          <v-card-text style="height: 100%" class="d-flex align-center">
+            <v-row dense align="center">
+              <v-col cols="4">
+                <v-icon size="70"> mdi-plus </v-icon>
+              </v-col>
+              <v-col cols="8">
+                <div class="ml-2 display-1 text--primary text-right">
+                  Add new
+                </div>
+              </v-col>
+            </v-row>
+          </v-card-text>
+        </v-card>
+      </v-col>
       <v-col
         v-for="card in getUserData"
-        :key="card.dt"
+        :key="card.id"
         cols="12"
         sm="6"
         md="3"
@@ -26,7 +42,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import ErrorLoading from '../ErrorLoading';
 import Tile from './Tile';
 
@@ -35,8 +51,13 @@ export default {
   components: { ErrorLoading, Tile },
   computed: {
     ...mapGetters({
-      getDataStatus: 'global/getDataStatus',
-      getUserData: 'global/getUserData'
+      getDataStatus: 'data/getDataStatus',
+      getUserData: 'user/getUserData'
+    })
+  },
+  methods: {
+    ...mapActions({
+      addNewPost: 'user/addNewPost'
     })
   }
 };
